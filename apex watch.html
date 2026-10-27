@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر ساعة Apex الذكية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* شريط التنقل العلوي */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(11, 15, 25, 0.9);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            color: #00f2fe;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            color: #b3b9c1;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #00f2fe;
+        }
+
+        /* الواجهة الرئيسية */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            padding: 130px 8% 60px 8%;
+            background: radial-gradient(circle at 70% 40%, #1a2238 0%, #0b0f19 75%);
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 550px;
+        }
+
+        .hero-content h1 {
+            font-size: 46px;
+            font-weight: 900;
+            line-height: 1.25;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 span {
+            color: #00f2fe;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            color: #94a3b8;
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 242, 254, 0.1);
+            color: #00f2fe;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            color: #0b0f19;
+            font-weight: 800;
+            font-size: 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(0, 242, 254, 0.3);
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(0, 242, 254, 0.5);
+        }
+
+        /* عرض الساعة التفاعلي */
+        .hero-image {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .watch-container {
+            position: relative;
+            width: 310px;
+            height: 370px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+        }
+
+        .smartwatch {
+            width: 200px;
+            height: 240px;
+            background: #1e293b;
+            border-radius: 45px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+            border: 4px solid #334155;
+            transition: 0.4s;
+        }
+
+        .watch-screen {
+            width: 160px;
+            height: 200px;
+            background: #000000;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid rgba(255,255,255,0.08);
+        }
+
+        .watch-time {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .watch-stats {
+            font-size: 11px;
+            color: #00f2fe;
+            background: rgba(0, 242, 254, 0.1);
+            padding: 4px 10px;
+            border-radius: 10px;
+            margin-top: 5px;
+            width: 100%;
+        }
+
+        .interactive-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: none;
+            padding: 4px 8px;
+            font-size: 10px;
+            border-radius: 5px;
+            margin-top: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .interactive-btn:hover {
+            background: #00f2fe;
+            color: #000;
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            border-radius: 40px;
+        }
+
+        .color-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.3s;
+        }
+
+        .color-dot:hover, .color-dot.active {
+            transform: scale(1.2);
+            border-color: #fff;
+        }
+
+        .dot-midnight { background-color: #1e293b; }
+        .dot-silver { background-color: #64748b; }
+        .dot-rosegold { background-color: #c55a3b; }
+        .dot-emerald { background-color: #044e3b; }
+
+        /* قسم المميزات */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 50px;
+        }
+
+        .features {
+            padding: 80px 8%;
+            background: #070911;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 242, 254, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .feature-icon {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #00f2fe;
+        }
+
+        .feature-card p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* قسم المواصفات التقنية */
+        .specs-section {
+            padding: 80px 8%;
+            background: #0b0f19;
+        }
+
+        .specs-table {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .specs-table th, .specs-table td {
+            padding: 18px 25px;
+            text-align: right;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .specs-table th {
+            background: rgba(0, 242, 254, 0.08);
+            color: #00f2fe;
+            font-weight: 700;
+            width: 35%;
+        }
+
+        .specs-table td {
+            color: #cbd5e1;
+        }
+
+        /* قسم الشراء والعرض */
+        .pricing-section {
+            padding: 80px 8%;
+            background: #070911;
+            display: flex;
+            justify-content: center;
+        }
+
+        .price-card {
+            background: linear-gradient(145deg, #131b2e, #0d1322);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            padding: 40px;
+            border-radius: 25px;
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .price-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #64748b;
+            font-size: 20px;
+        }
+
+        .current-price {
+            font-size: 42px;
+            font-weight: 900;
+            color: #00f2fe;
+            margin: 10px 0;
+        }
+
+        .price-features {
+            list-style: none;
+            margin: 20px 0;
+            text-align: right;
+        }
+
+        .price-features li {
+            padding: 8px 0;
+            color: #94a3b8;
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+        }
+
+        .price-features li::before {
+            content: "✓ ";
+            color: #00f2fe;
+            font-weight: bold;
+        }
+
+        /* قسم التقييمات */
+        .reviews-section {
+            padding: 80px 8%;
+            background: #0b0f19;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .review-card {
+            background: rgba(255,255,255,0.02);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stars {
+            color: #f1c40f;
+            margin-bottom: 10px;
+        }
+
+        .reviewer-name {
+            font-weight: 700;
+            color: #fff;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* التذييل Footer */
+        footer {
+            padding: 30px 8%;
+            background: #04060b;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-content {
+                margin-bottom: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر -->
+    <header>
+        <div class="logo">APEX WATCH</div>
+        <nav>
+            <a href="#hero">الرئيسية</a>
+            <a href="#features">المميزات</a>
+            <a href="#specs">المواصفات</a>
+            <a href="#price">السعر</a>
+            <a href="#reviews">التقييمات</a>
+        </nav>
+    </header>
+
+    <!-- القسم الرئيسي -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <span class="badge">🔥 إصدار محدود 2026</span>
+            <h1>ساعة <span>Apex الذكية</span> الأفضل لإيدك</h1>
+            <p>تتبع لياقتك البدنية، نبضات قلبك، مع شاشة AMOLED وتصميم عصري يتماشى مع ذوقك. اختر اللون واطلبها الآن.</p>
+            <a href="#price" class="btn">احصل عليها الآن بخصم 30%</a>
+        </div>
+
+        <div class="hero-image">
+            <div class="watch-container">
+                <div class="smartwatch" id="watchFrame">
+                    <div class="watch-screen">
+                        <div class="watch-time" id="clock">10:42</div>
+                        <div class="watch-stats" id="pulseText">❤️ 75 نبضة/دج</div>
+                        <div class="watch-stats" id="modeText">🎵 تشغيل الموسيقى</div>
+                        <button class="interactive-btn" onclick="togglePulse()">قياس النبض الأن 🩺</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- أزرار الألوان -->
+            <div class="color-picker">
+                <div class="color-dot dot-midnight active" onclick="changeWatchColor('#1e293b', '#334155')"></div>
+                <div class="color-dot dot-silver" onclick="changeWatchColor('#475569', '#94a3b8')"></div>
+                <div class="color-dot dot-rosegold" onclick="changeWatchColor('#c55a3b', '#e27d60')"></div>
+                <div class="color-dot dot-emerald" onclick="changeWatchColor('#044e3b', '#065f46')"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المميزات -->
+    <section class="features" id="features">
+        <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>شاشة AMOLED فائقة</h3>
+            <p>ألوان زاهية ووضوح عالي جداً تحت الشمس مع زجاج حماية مقاوم للخدوش والتصادمات.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔋</div>
+            <h3>بطارية تدوم لأسبوع</h3>
+            <p>استمتع بشحن يدعم استخدامك المتواصل لأسبوع كامل دون الحاجة للشحن اليومي.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💧</div>
+            <h3>مقاومة الماء 5ATM</h3>
+            <p>مصممة لتحمل السباحة وممارسة التمارين الشاقة في جميع الظروف الجوية.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">❤️</div>
+            <h3>مراقبة الصحة 24/7</h3>
+            <p>متابعة دقيقة لنبضات القلب، نسبة الأكسجين في الدم، وجودة النوم طوال اليوم.</p>
+        </div>
+    </section>
+
+    <!-- قسم المواصفات التقنية -->
+    <section class="specs-section" id="specs">
+        <h2 class="section-title">المواصفات التقنية</h2>
+        <p class="section-subtitle">تفاصيل الأجهزة والأداء الممتاز لـ Apex Watch</p>
+
+        <table class="specs-table">
+            <tr>
+                <th>الشاشة</th>
+                <td>1.43 بوصة AMOLED لمس بالكامل (466x466 بكسل)</td>
+            </tr>
+            <tr>
+                <th>البطارية</th>
+                <td>400 مللي أمبير (تستمر من 7 إلى 10 أيام)</td>
+            </tr>
+            <tr>
+                <th>الاتصال</th>
+                <td>بلوتوث 5.3 + دعم المكالمات الصرفية</td>
+            </tr>
+            <tr>
+                <th>التوافق</th>
+                <td>يدعم هواتف Android و iOS</td>
+            </tr>
+            <tr>
+                <th>المستشعرات</th>
+                <td>مستشعر نبضات القلب، PPG، تسارع 3 محاور، قياس النوم</td>
+            </tr>
+            <tr>
+                <th>الوزن والخامة</th>
+                <td>45 جرام - هيكل ألومنيوم مع سوار سيليكون مريح</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- قسم السعر والطلب -->
+    <section class="pricing-section" id="price">
+        <div class="price-card">
+            <h3>احصل على ساعتك اليوم</h3>
+            <p style="color: #94a3b8;">عرض لفترة محدودة شامل الشحن المجاني</p>
+            <div style="margin-top: 15px;">
+                <span class="old-price">1200 ج.م</span>
+                <div class="current-price">850 ج.م</div>
+            </div>
+            <ul class="price-features">
+                <li>ضمان لمدة سنة كاملة ضد عيوب الصناعة</li>
+                <li>شحن مجاني وسريع لجميع المحافظات</li>
+                <li>دفع عند الاستلام بعد المعاينة</li>
+                <li>استبدال واسترجاع خلال 14 يوم</li>
+            </ul>
+            <a href="#" class="btn" style="width: 100%; text-align: center;">اطلب الآن وسجل بياناتك</a>
+        </div>
+    </section>
+
+    <!-- قسم التقييمات -->
+    <section class="reviews-section" id="reviews">
+        <h2 class="section-title">ماذا يقول عملاؤنا؟</h2>
+        <p class="section-subtitle">آراء حقيقية من أشخاص جربوا الساعة</p>
+
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"الساعة ممتازة جداً والشاشة واضحة في الشمس والبطارية بتطول معايا أسبوع مرتاح."</p>
+                <div class="reviewer-name">- أحمد صابر</div>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"تغيير الألوان والسير سريع وسهل، وخفيفة جداً في الإيد والتوصيل كان في يومين."</p>
+                <div class="reviewer-name">- محمود علي</div>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p>"خامات الساعة ممتازة ومقاومة للماء، جربتها في التمرين وكانت دقيقة."</p>
+                <div class="reviewer-name">- عمر خالد</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- التذييل -->
+    <footer>
+        <p>© 2026 جميع الحقوق محفوظة لـ APEX Watch Store - تم التطوير بلغة HTML/CSS/JS</p>
+    </footer>
+
+    <!-- الأكواد البرمجية التفاعلية -->
+    <script>
+        // دالة تغيير ألوان هيكل الساعة
+        function changeWatchColor(bgColor, borderColor) {
+            const watch = document.getElementById('watchFrame');
+            watch.style.backgroundColor = bgColor;
+            watch.style.borderColor = borderColor;
+
+            document.querySelectorAll('.color-dot').forEach(dot => dot.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // تحديث الوقت المباشر
+        setInterval(() => {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('clock').innerText = `${hours}:${minutes}`;
+        }, 1000);
+
+        // دالة قياس النبض التفاعلية
+        function togglePulse() {
+            const pulseText = document.getElementById('pulseText');
+            pulseText.innerText = "⚡ جاري القياس...";
+            setTimeout(() => {
+                const randomPulse = Math.floor(Math.random() * (90 - 68 + 1)) + 68;
+                pulseText.innerText = `❤️ ${randomPulse} نبضة/دج`;
+            }, 1200);
+        }
+    </script>
+
+</body>
+</html>
